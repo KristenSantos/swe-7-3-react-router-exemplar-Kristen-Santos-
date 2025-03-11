@@ -1,35 +1,45 @@
-// TODO:
-// - import useNavigate from react router
-// - Update the onClick handler such that clicking on a bot card will navigate the user to /robots/:id where :id is the id of the current bot
-// - Do NOT use a <Link> component to accomplish this. Use the `useNavigate` hook instead.
-
-import BotClassIcon from './BotClassIcon';
+// Best Practice: Import necessary dependencies at the top
+import BotClassIcon from "./BotClassIcon";
+import { useNavigate } from "react-router-dom";
 
 const BotCard = ({ robot }) => {
+  // Best Practice: useNavigate hook allows programmatic navigation without using <Link>
+  const navigate = useNavigate();
+
+  // Best Practice: Define the click handler separately for readability and maintainability
   const handleClick = () => {
-    console.log(`take me to robot ${robot.id}`);
-  }
+    console.log(`Navigating to robot ${robot.id}`); // Logs navigation event for debugging
+    navigate(`/robots/${robot.id}`); // Navigates to the robot's details page dynamically
+  };
 
   return (
-    <div className="ui card" onClick={handleClick}>
+    // Best Practice: Attach the onClick handler to the entire card to make it a clickable element
+    <div
+      className="ui card"
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    >
       <div className="image">
+        {/* Best Practice: Always provide an alt attribute for accessibility */}
         <img alt={robot.name} src={robot.avatar_url} />
       </div>
       <div className="content">
         <div className="header">
+          {/* Best Practice: Display bot name with its corresponding class icon */}
           {robot.name} {BotClassIcon(robot.bot_class)}
         </div>
 
         <div className="meta">
+          {/* Best Practice: Use <small> for secondary text like a catchphrase */}
           <small>{robot.catchphrase}</small>
         </div>
       </div>
       <div className="extra content">
+        {/* Best Practice: Use icons for visual representation of stats */}
         <span>
           <i className="icon heartbeat" />
           {robot.health}
         </span>
-
         <span>
           <i className="icon lightning" />
           {robot.damage}
@@ -41,6 +51,6 @@ const BotCard = ({ robot }) => {
       </div>
     </div>
   );
-}
+};
 
 export default BotCard;
