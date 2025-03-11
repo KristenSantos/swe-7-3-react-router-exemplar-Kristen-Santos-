@@ -1,27 +1,39 @@
 /* 
-The App component serves as the top-level component
-or "root" component. It establishes the entire
-web application's routing structure.
+  The App component serves as the root component of the application.
+  It establishes the routing structure and manages the different pages 
+  users can navigate to within the app.
 */
 
-/* eslint-disable no-unused-vars */
-import BotSpecsPage from './pages/BotSpecsPage'
-import NotFoundPage from './pages/NotFoundPage'
-import BotPage from './pages/BotsPage'
+/* eslint-disable no-unused-vars */ // Best Practice: Disable unused variable warnings only if necessary
 
-// TODO: import Routes and Route
+// Best Practice: Import all page components at the top for clear structure and easy maintenance
+import BotSpecsPage from "./pages/BotSpecsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import BotPage from "./pages/BotsPage";
+
+// Best Practice: Import routing components from react-router-dom to define navigation paths
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
-  // TODO: Render Routes with a Route for:
-  // - BotPage when the URL matches "/"
-  // - BotSpecsPage when the URL matches "/robots/:id"
-  // - NotFoundPage when the URL doesn't match either of the above URLs
-
   return (
     <div className="App">
-      <BotPage />
+      {/* 
+        Best Practice: Use <Routes> to wrap all route definitions 
+        Ensures proper routing behavior in React Router v6
+      */}
+      <Routes>
+        {/* 
+          Best Practice: Define explicit paths for each page component 
+          "/" -> Renders the BotPage (homepage)
+          "/robots/:id" -> Renders BotSpecsPage with dynamic ID parameter
+          "*" -> Catches all unknown routes and renders NotFoundPage
+        */}
+        <Route path="/" element={<BotPage />} />
+        <Route path="/robots/:id" element={<BotSpecsPage />} />
+        <Route path="*" element={<NotFoundPage />} /> {/* Handles 404 pages */}
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
